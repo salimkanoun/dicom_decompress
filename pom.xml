@@ -1,19 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <properties>
-    
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <weasis.version>3.0.2-rc1</weasis.version>
-    <weasis.opencv.native.version>4.0.0-dcmR2</weasis.opencv.native.version>
-    <keycloak.version>4.5.0.Final</keycloak.version>
-    <jaxws-tools-maven-plugin.version>1.2.1.Final</jaxws-tools-maven-plugin.version>
-    <jbossws-cxf-client.version>5.2.1.Final</jbossws-cxf-client.version>
-    <apache-cxf.version>3.2.4-jbossorg-1</apache-cxf.version>
-    <commons-cli.version>1.4</commons-cli.version>
-
-  </properties>
-  
-  
    <repositories>
     <repository>
       <id>java.net</id>
@@ -27,13 +13,6 @@
  </repositories>
  
    <build>
-       <extensions>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ssh</artifactId>
-        <version>2.10</version>
-      </extension>
-    </extensions>
     <sourceDirectory>src</sourceDirectory>
       <plugins>
       <plugin>
@@ -119,6 +98,7 @@
 	    <groupId>org.dcm4che</groupId>
 	    <artifactId>dcm4che-imageio</artifactId>
 	    <version>5.14.1</version>
+	    
 	</dependency>
 	
 	<dependency>
@@ -131,6 +111,7 @@
     <groupId>com.sun.media</groupId>
     <artifactId>jai_imageio</artifactId>
     <version>1.2-pre-dr-b04</version>
+    <scope>runtime</scope>
 	</dependency>
 	
 	
@@ -150,6 +131,7 @@
     <groupId>org.dcm4che</groupId>
     <artifactId>dcm4che-imageio-rle</artifactId>
     <version>5.14.1</version>
+    <scope>runtime</scope>
 </dependency>
 
  <dependency>
@@ -165,6 +147,7 @@
     	<artifactId>dcm4che-imageio-opencv</artifactId>
     	<version>5.14.1</version>
     	<scope>runtime</scope>
+    	
     </dependency>
     
 
