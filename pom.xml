@@ -14,6 +14,7 @@
    <build>
     <sourceDirectory>src</sourceDirectory>
   </build>
+  
   <groupId>dicom_decompress</groupId>
   <artifactId>dicom_decompress</artifactId>
   <version>0.0.1-SNAPSHOT</version>
@@ -55,7 +56,6 @@
 	    <groupId>org.dcm4che</groupId>
 	    <artifactId>dcm4che-imageio-opencv</artifactId>
 	    <version>5.14.1</version>
-	    <scope>runtime</scope>
 	</dependency>
 	
 	<dependency>
@@ -63,13 +63,7 @@
 	    <artifactId>dcm4che-imageio</artifactId>
 	    <version>5.14.1</version>
 	</dependency>
-	
-	
-	
-	
-	
-	
-	
+
 
 	</dependencies>
     
