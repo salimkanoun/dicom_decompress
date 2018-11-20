@@ -139,6 +139,7 @@ public class Uncompress_Gui extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("ici");
 				counterTranscoded=0;
 				counterAllFiles=0;
 				Dcm2Dcm dcm2dcm=new Dcm2Dcm();
@@ -162,8 +163,9 @@ public class Uncompress_Gui extends JFrame {
 						
 									
 					};
-					
+					System.out.println("ici");
 					worker.execute();
+					System.out.println("ici");
 					
 					
 					
@@ -221,6 +223,7 @@ public class Uncompress_Gui extends JFrame {
 	}
 	
 	private void mtranscode(File src, File dest, Dcm2Dcm dcm, boolean onlycompressed) {
+		System.out.println("ici2");
         if (src.isDirectory()) {
             dest.mkdir();
             for (File file : src.listFiles())
@@ -232,7 +235,9 @@ public class Uncompress_Gui extends JFrame {
         try {
         	if(onlycompressed) {
         		if (isCompressedDicom(src)){
+        			System.out.println("ici3");
         			dcm.transcode(src, dest);
+        			System.out.println("ici4");
         			 counterTranscoded++;
         		}
         	}else {
@@ -244,6 +249,7 @@ public class Uncompress_Gui extends JFrame {
         } catch (Exception e) {
             System.out.println(("failed"+src+e.getMessage()));
         }
+        System.out.println("ici3");
     }
 	
 	private void listCompressed() {
