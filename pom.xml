@@ -1,18 +1,75 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <weasis.version>3.0.2-rc1</weasis.version>
+    <weasis.opencv.native.version>4.0.0-dcmR2</weasis.opencv.native.version>
+    <keycloak.version>4.5.0.Final</keycloak.version>
+    <jaxws-tools-maven-plugin.version>1.2.1.Final</jaxws-tools-maven-plugin.version>
+    <jbossws-cxf-client.version>5.2.1.Final</jbossws-cxf-client.version>
+    <apache-cxf.version>3.2.4-jbossorg-1</apache-cxf.version>
+    <commons-cli.version>1.4</commons-cli.version>
+
   </properties>
+  
+  
    <repositories>
     <repository>
       <id>java.net</id>
       <url>http://dev.loci.wisc.edu/maven2/</url>
     </repository>
+    <repository>
+      <id>www.dcm4che.org</id>
+      <name>dcm4che Repository</name>
+      <url>http://maven.dcm4che.org</url>
+    </repository>
  </repositories>
  
    <build>
+       <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>2.10</version>
+      </extension>
+    </extensions>
     <sourceDirectory>src</sourceDirectory>
+      <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+        <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>2.4.0</version>
+          <configuration>
+            <instructions>
+              <Implementation-Title>${project.name}</Implementation-Title>
+              <Implementation-Version>${project.version}</Implementation-Version>
+              <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
+              <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+              <Specification-Title>${project.name}</Specification-Title>
+              <Specification-Version>${project.version}</Specification-Version>
+              <Specification-Vendor>${project.organization.name}</Specification-Vendor>
+            </instructions>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
   
   <groupId>dicom_decompress</groupId>
@@ -76,17 +133,6 @@
     <version>1.2-pre-dr-b04</version>
 	</dependency>
 	
-	<dependency>
-    <groupId>log4j</groupId>
-    <artifactId>log4j</artifactId>
-    <version>1.2.17</version>
-	</dependency>
-	
-	<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>1.7.5</version>
-</dependency>
 	
 	<dependency>
     <groupId>org.slf4j</groupId>
@@ -104,6 +150,19 @@
     <groupId>org.dcm4che</groupId>
     <artifactId>dcm4che-imageio-rle</artifactId>
     <version>5.14.1</version>
+</dependency>
+
+ <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.25</version>
+      </dependency>
+   <dependency>
+   
+  <groupId>org.slf4j</groupId>
+  <artifactId>slf4j-log4j12</artifactId>
+  <version>1.7.25</version>
+  <scope>runtime</scope>
 </dependency>
 
 	
