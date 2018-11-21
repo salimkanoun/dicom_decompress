@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import org.apache.commons.lang3.ArrayUtils;
 import org.dcm4che3.io.DicomInputStream;
 import org.dcm4che3.tool.dcm2dcm.Dcm2Dcm;
+import org.opencv.core.Core;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -60,6 +61,8 @@ public class Uncompress_Gui extends JFrame {
 	 * Create the frame.
 	 */
 	public Uncompress_Gui() {
+		//SK A VOIR
+		//System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
