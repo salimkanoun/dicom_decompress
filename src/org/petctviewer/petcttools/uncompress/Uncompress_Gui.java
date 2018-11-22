@@ -20,6 +20,7 @@ import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.dcm4che3.data.UID;
 import org.dcm4che3.io.DicomInputStream;
 import org.dcm4che3.tool.dcm2dcm.Dcm2Dcm;
 import org.opencv.core.Core;
@@ -61,8 +62,6 @@ public class Uncompress_Gui extends JFrame {
 	 * Create the frame.
 	 */
 	public Uncompress_Gui() {
-		//SK A VOIR
-		//System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -146,6 +145,7 @@ public class Uncompress_Gui extends JFrame {
 				counterTranscoded=0;
 				counterAllFiles=0;
 				Dcm2Dcm dcm2dcm=new Dcm2Dcm();
+				dcm2dcm.setTransferSyntax(UID.ImplicitVRLittleEndian);
 				
 				if(comboBox.getSelectedIndex()==0) {
 					SwingWorker<Void,Void> worker = new SwingWorker<Void,Void>(){
@@ -250,6 +250,7 @@ public class Uncompress_Gui extends JFrame {
         	
             lblstatus.setText("Transcoded "+counterTranscoded+"/"+counterAllFiles+" Files");
         } catch (Exception e) {
+        	e.printStackTrace();
             System.out.println(("failed"+src+e.getMessage()));
         }
         System.out.println("ici3");
