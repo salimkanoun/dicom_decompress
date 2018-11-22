@@ -23,7 +23,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.dcm4che3.data.UID;
 import org.dcm4che3.io.DicomInputStream;
 import org.dcm4che3.tool.dcm2dcm.Dcm2Dcm;
-import org.opencv.core.Core;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -166,11 +165,8 @@ public class Uncompress_Gui extends JFrame {
 						
 									
 					};
-					System.out.println("ici");
-					worker.execute();
-					System.out.println("ici");
 					
-					
+					worker.execute();	
 					
 				}else if(comboBox.getSelectedIndex()==1) {
 					SwingWorker<Void,Void> worker = new SwingWorker<Void,Void>(){
@@ -226,7 +222,6 @@ public class Uncompress_Gui extends JFrame {
 	}
 	
 	private void mtranscode(File src, File dest, Dcm2Dcm dcm, boolean onlycompressed) {
-		System.out.println("ici2");
         if (src.isDirectory()) {
             dest.mkdir();
             for (File file : src.listFiles())
@@ -238,9 +233,7 @@ public class Uncompress_Gui extends JFrame {
         try {
         	if(onlycompressed) {
         		if (isCompressedDicom(src)){
-        			System.out.println("ici3");
         			dcm.transcode(src, dest);
-        			System.out.println("ici4");
         			 counterTranscoded++;
         		}
         	}else {
@@ -251,9 +244,8 @@ public class Uncompress_Gui extends JFrame {
             lblstatus.setText("Transcoded "+counterTranscoded+"/"+counterAllFiles+" Files");
         } catch (Exception e) {
         	e.printStackTrace();
-            System.out.println(("failed"+src+e.getMessage()));
         }
-        System.out.println("ici3");
+
     }
 	
 	private void listCompressed() {
