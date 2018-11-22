@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -140,9 +141,10 @@ public class Uncompress_Gui extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("ici");
 				counterTranscoded=0;
 				counterAllFiles=0;
+				lblstatus.setText("Start Scanning Files....");
+				pack();
 				Dcm2Dcm dcm2dcm=new Dcm2Dcm();
 				dcm2dcm.setTransferSyntax(UID.ImplicitVRLittleEndian);
 				
@@ -152,7 +154,7 @@ public class Uncompress_Gui extends JFrame {
 						
 						protected Void doInBackground() throws Exception {
 							
-							mtranscode(originalFiles, destinationFile, dcm2dcm, false);
+							mtranscode(originalFiles, destinationFile, dcm2dcm);
 							return null;
 							
 						}
@@ -174,7 +176,7 @@ public class Uncompress_Gui extends JFrame {
 						
 						protected Void doInBackground() throws Exception {
 							
-							mtranscode(originalFiles, destinationFile, dcm2dcm, true);
+							mtranscodeOnlyCompressed(originalFiles, destinationFile, dcm2dcm);
 							return null;
 							
 						}
@@ -221,30 +223,53 @@ public class Uncompress_Gui extends JFrame {
 		
 	}
 	
-	private void mtranscode(File src, File dest, Dcm2Dcm dcm, boolean onlycompressed) {
-        if (src.isDirectory()) {
-            dest.mkdir();
-            for (File file : src.listFiles())
-                mtranscode(file, new File(dest, file.getName()), dcm, onlycompressed);
-            return;
-        }
-        if (dest.isDirectory()) dest = new File(dest, src.getName());
-        counterAllFiles++;
-        try {
-        	if(onlycompressed) {
-        		if (isCompressedDicom(src)){
-        			dcm.transcode(src, dest);
-        			 counterTranscoded++;
-        		}
-        	}else {
-        		dcm.transcode(src, dest);
-        		counterTranscoded++;
-        	}
+	private void mtranscode(File src, File dest, Dcm2Dcm dcm) {
+		
+		 if (src.isDirectory()) {
+	            for (File file : src.listFiles())
+	                mtranscode(file, new File(dest, file.getName()), dcm);
+	            return;
+        }else {
+             counterAllFiles++;
+             try {
+         		if(!dest.getParentFile().exists()) dest.getParentFile().mkdirs();
+         		dcm.transcode(src, dest);
+         		counterTranscoded++;
+     			lblstatus.setText("Transcoded "+counterTranscoded+"/"+counterAllFiles+" Files");
+             } catch (Exception e) {
+             	e.printStackTrace();
+             }
         	
-            lblstatus.setText("Transcoded "+counterTranscoded+"/"+counterAllFiles+" Files");
-        } catch (Exception e) {
-        	e.printStackTrace();
         }
+		 
+       
+
+    }
+	
+	private void mtranscodeOnlyCompressed(File src, File dest, Dcm2Dcm dcm) {
+		
+		 if (src.listFiles(File::isFile).length==0) {
+	            for (File file : src.listFiles(File::isDirectory))
+	            	mtranscodeOnlyCompressed(file, new File(dest, file.getName()), dcm);
+	            return;
+        }else {
+        	
+        	 try {
+        		File[] files=src.listFiles();
+				boolean compressed=isCompressedDicom(files[0]);
+         		if (compressed){
+         			mtranscode(src,dest,dcm);
+         		}
+             	
+             	
+                
+             } catch (Exception e) {
+             	e.printStackTrace();
+             }
+        	
+        }
+        
+       
 
     }
 	
@@ -275,6 +300,8 @@ public class Uncompress_Gui extends JFrame {
 			private void getTs(File originalFiles) throws IOException {
 				
 				File[] directories = originalFiles.listFiles(File::isDirectory);
+				counterTranscoded++;
+				lblstatus.setText("Scanned "+counterTranscoded+" Directories");
 				
 				if(ArrayUtils.isEmpty(directories) ) {
 					if(originalFiles.listFiles().length ==0) return;
